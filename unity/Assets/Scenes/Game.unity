@@ -549,8 +549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  playerAddress: 0x5686a647a9cdd63ade617e0baf3b364856b813b508f03903eb58a7e622d5855
-  playerKey: 0x33003003001800009900180300d206308b0070db00121318d17b5e6262150b
+  playerAddress: 0x4f716b39b23854b98521031d36eeb94e2405c4b2302c9472b3baa516d2a4a5d
+  playerKey: 0x7ad187673fb42477407344b7a95fbd937deb83f2dc0403764f01de57b052f20
 --- !u!114 &579954850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 729429387}
   - component: {fileID: 729429386}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PlayerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
