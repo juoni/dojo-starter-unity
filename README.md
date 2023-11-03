@@ -1,6 +1,6 @@
 # Integrate Unity with Dojo: A Quick Start Guide
 
-This guide will walk you through the process of integrating Unity with Dojo.
+This guide will walk you through the process of integrating Unity with Dojo using the [Starknet Unity SDK](https://github.com/NethermindEth/starknet.unity/).
 
 ## Initial Setup
 

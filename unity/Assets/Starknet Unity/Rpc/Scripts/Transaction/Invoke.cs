@@ -7,6 +7,8 @@ using StarkSharp.StarkCurve.Signature;
 using StarkSharp.Platforms.Unity.RPC;
 using StarkSharp.Connectors.Components;
 using StarkSharp.Settings;
+using Newtonsoft.Json.Linq;
+using System.Numerics;
 
 public class Invoke : MonoBehaviour
 {
@@ -27,7 +29,9 @@ public class Invoke : MonoBehaviour
     private static string senderAddress;
     private static string contractAddress;
     private static string calldataHash;
+    private static string nonce;
     private static string[] calldata;
+    private static Request transactionRequest;
 
 
     public void CreateTransaction(string _senderAddress, string _contractAddress, string functionName, string[] functionArgs, int cairoVersion, string _maxFee, string _chainId, string _privateKey)
@@ -65,7 +69,8 @@ public class Invoke : MonoBehaviour
         try
         {
             Debug.Log("Nonce complete: " + response);
-            object nonce = ((JsonRpcResponse)response).result;
+            object _nonce = ((JsonRpcResponse)response).result;
+            nonce = _nonce.ToString();
             ECDSA.ECSignature signature = TransactionHash.Hash.SignInvokeTransaction(
                     "0x1",
                     senderAddress,
@@ -79,7 +84,7 @@ public class Invoke : MonoBehaviour
             string r = TransactionHash.Hash.BigIntegerToHex(signature.R);
             string s = TransactionHash.Hash.BigIntegerToHex(signature.S);
 
-            Request request = new Request
+            transactionRequest = new Request
             {
                 type = "INVOKE",
                 sender_address = senderAddress,
@@ -89,8 +94,13 @@ public class Invoke : MonoBehaviour
                 signature = new string[] { r, s },
                 nonce = nonce.ToString()
             };
-            JsonRpc requestData = JsonRpcHandler.GenerateRequestData("starknet_addInvokeTransaction", request);
 
+            var requestData = new JsonRpc
+            {
+                id = 1,
+                method = "starknet_addInvokeTransaction",
+                @params = new object[] { transactionRequest }
+            };
             StartCoroutine(UnityRpcPlatform.SendPostRequestUnity(requestData, OnTransactionComplete));
         }
         catch (System.Exception ex)
